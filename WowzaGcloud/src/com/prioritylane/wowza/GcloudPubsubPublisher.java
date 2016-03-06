@@ -14,13 +14,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 
-// topicName = "projects/myproject/topics/mytopic"
-
 public class GcloudPubsubPublisher {
 	
 	Pubsub pubsub = null;
 	
-	public void initializePubsub(){
+	public GcloudPubsubPublisher(){
 		try {
 			this.pubsub = PortableConfiguration.createPubsubClient();
 		} catch (IOException e) {
@@ -30,7 +28,7 @@ public class GcloudPubsubPublisher {
 		}
 	}
 
-	public void createTopic(String topicName){
+	public Topic createTopic(String topicName){
 		Topic newTopic;
 		try {
 			newTopic = this.pubsub.projects().topics()
@@ -39,14 +37,14 @@ public class GcloudPubsubPublisher {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return;
+			return null;
 		}
 		System.out.println("Created: " + newTopic.getName());
-		
+		return newTopic;
 	}
 	
 	// message = "Hello Cloud Pub/Sub!"
-	public void publishMessage(String message){
+	public void publishMessage(String topicName, String message){
 		PubsubMessage pubsubMessage = new PubsubMessage();
 		// You need to base64-encode your message with
 		// PubsubMessage#encodeData() method.
@@ -62,7 +60,7 @@ public class GcloudPubsubPublisher {
 		PublishResponse publishResponse;
 		try {
 			publishResponse = pubsub.projects().topics()
-			        .publish("projects/myproject/topics/mytopic", publishRequest)
+			        .publish(topicName, publishRequest)
 			        .execute();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

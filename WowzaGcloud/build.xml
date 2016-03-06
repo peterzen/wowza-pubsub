@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <project name="WowzaGcloud" default="jar" basedir="..">
 	
+	
 	<property name="wowza.lib.dir" value="/Library/WowzaStreamingEngine-4.3.0/lib"/>
-	<property name="jar.filename" value="WowzaGcloud.jar"/>
+	<property name="jar.filename" value="wms-gcloud-publisher.jar"/>
 	<property name="core.build.dir" value="bin"/>
 
 	<target name="jar">
