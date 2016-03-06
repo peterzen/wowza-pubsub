@@ -4,7 +4,7 @@
 	
 	<property name="wowza.lib.dir" value="/Library/WowzaStreamingEngine-4.3.0/lib"/>
 	<property name="jar.filename" value="wms-gcloud-publisher.jar"/>
-	<property name="core.build.dir" value="bin"/>
+	<property name="core.build.dir" value="target/classes"/>
 
 	<target name="jar">
 		<jar jarfile="${wowza.lib.dir}/${jar.filename}">
