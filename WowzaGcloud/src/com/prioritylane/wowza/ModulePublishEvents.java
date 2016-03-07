@@ -13,6 +13,8 @@ import com.wowza.wms.module.ModuleBase;
 import com.wowza.wms.server.Server;
 import com.wowza.wms.stream.IMediaStream;
 
+import java.io.IOException;
+
 import com.prioritylane.wowza.GcloudPubsubPublisher;
 
 public class ModulePublishEvents extends ModuleBase {
@@ -38,13 +40,15 @@ public class ModulePublishEvents extends ModuleBase {
 		@Override
 		public void onStreamStart(IMediaCaster mediaCaster)
 		{
-			sendNotification(mediaCaster, "publish");
+			getLogger().info("**** onStreamStart");
+			publishMessage("onStreamStart");
 		}
 
 		@Override
 		public void onStreamStop(IMediaCaster mediaCaster)
 		{
-			sendNotification(mediaCaster, "unpublish");
+			getLogger().info("**** onStreamStop");
+			publishMessage("onStreamStop");
 		}
 	}
 	
@@ -85,19 +89,15 @@ public class ModulePublishEvents extends ModuleBase {
 
 	
 	
-	public void onAppStart(IApplicationInstance appInstance)
+	public void onAppStart(IApplicationInstance appInstance) throws IOException
 	{
 		this.appInstance = appInstance;
 		this.logger = WMSLoggerFactory.getLoggerObj(appInstance);
 		this.moduleDebug = getPropertyValueBoolean(PROP_NAME_PREFIX + "Debug", false);
 		
-		this.topicName = "projects/stagecloud-1210/topics/mediaserver";
-
-		String fullname = appInstance.getApplication().getName() + "/" + appInstance.getName();
+//		String fullname = appInstance.getApplication().getName() + "/" + appInstance.getName();
 		
 //		getLogger().info("onAppStart: " + fullname);
-		getLogger().info("ModulePublishEvents start publishing to " + this.topicName);
-
 		if (this.logger.isDebugEnabled())
 			this.moduleDebug = true;
 
@@ -106,53 +106,55 @@ public class ModulePublishEvents extends ModuleBase {
 		else
 			this.logger.info(MODULE_NAME + " DEBUG mode is OFF");
 
-		this.gcloudPublisher = new GcloudPubsubPublisher();
 		appInstance.addMediaCasterListener(this.mediaCasterListener);
+		
+		topicName = "projects/stagecloud-1210/topics/mediaserver";
+		gcloudPublisher = new GcloudPubsubPublisher(getLogger());
 	}
 
 	
 	public void doSomething(IClient client, RequestFunction function, AMFDataList params) {
-		getLogger().info("doSomething");
+		getLogger().info("**** doSomething");
 		sendResult(client, params, "Hello Wowza");
 	}
 
-	public void sendNotification(IMediaCaster mediaCaster, String message) {
-		// TODO Auto-generated method stub
-		gcloudPublisher.publishMessage(this.topicName, message);
+	public void publishMessage(String message) {
+		gcloudPublisher.publishMessage(topicName, message);
 	}
 
 	public void onAppStop(IApplicationInstance appInstance) {
-		this.gcloudPublisher = null;
+		gcloudPublisher = null;
 		String fullname = appInstance.getApplication().getName() + "/" + appInstance.getName();
-		getLogger().info("onAppStop: " + fullname);
+		getLogger().info("**** onAppStop: " + fullname);
 	}
 
 	public void onConnect(IClient client, RequestFunction function, AMFDataList params) {
-		getLogger().info("onConnect: " + client.getClientId());
+		getLogger().info("**** onConnect: " + client.getClientId());
 	}
 
 	public void onConnectAccept(IClient client) {
-		getLogger().info("onConnectAccept: " + client.getClientId());
+		getLogger().info("**** onConnectAccept: " + client.getClientId());
 	}
 
 	public void onConnectReject(IClient client) {
-		getLogger().info("onConnectReject: " + client.getClientId());
+		getLogger().info("**** onConnectReject: " + client.getClientId());
 	}
 
 	public void onDisconnect(IClient client) {
-		getLogger().info("onDisconnect: " + client.getClientId());
+		getLogger().info("**** onDisconnect: " + client.getClientId());
 	}
 
 	public void onStreamCreate(IMediaStream stream) {
-		getLogger().info("onStreamCreate: " + stream.getSrc());
+		getLogger().info("**** onStreamCreate: " + stream.getSrc());
+		publishMessage("onStreamCreate");
 	}
 
 	public void onStreamDestroy(IMediaStream stream) {
-		getLogger().info("onStreamDestroy: " + stream.getSrc());
+		getLogger().info("**** onStreamDestroy: " + stream.getSrc());
 	}
 
 	public void onCall(String handlerName, IClient client, RequestFunction function, AMFDataList params) {
-		getLogger().info("onCall: " + handlerName);
+		getLogger().info("**** onCall: " + handlerName);
 	}
 
 }

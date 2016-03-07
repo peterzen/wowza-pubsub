@@ -10,6 +10,7 @@ import com.google.api.services.pubsub.PubsubScopes;
 import com.google.common.base.Preconditions;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import com.prioritylane.wowza.RetryHttpInitializerWrapper;
 
@@ -20,7 +21,7 @@ import com.prioritylane.wowza.RetryHttpInitializerWrapper;
 public class PortableConfiguration {
 
     // Default factory method.
-    public static Pubsub createPubsubClient() throws IOException {
+    public static Pubsub createPubsubClient() throws InvocationTargetException, IOException {
         return createPubsubClient(Utils.getDefaultTransport(),
                 Utils.getDefaultJsonFactory());
     }
