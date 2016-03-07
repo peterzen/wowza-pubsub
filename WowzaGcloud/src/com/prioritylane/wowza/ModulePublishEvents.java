@@ -41,6 +41,10 @@ public class ModulePublishEvents extends ModuleBase {
 		public void onStreamStart(IMediaCaster mediaCaster)
 		{
 			getLogger().info("**** onStreamStart");
+			/*
+			 * TODO
+			 * https://github.com/peterzen/wowza-pubsub/issues/3
+			 */
 			publishMessage("onStreamStart");
 		}
 
@@ -48,6 +52,10 @@ public class ModulePublishEvents extends ModuleBase {
 		public void onStreamStop(IMediaCaster mediaCaster)
 		{
 			getLogger().info("**** onStreamStop");
+			/*
+			 * TODO
+			 * https://github.com/peterzen/wowza-pubsub/issues/3
+			 */
 			publishMessage("onStreamStop");
 		}
 	}
@@ -65,8 +73,6 @@ public class ModulePublishEvents extends ModuleBase {
 			@Override
 			public void run()
 			{
-					// TODO 
-					// shut down gcloud publisher
 					if (serverDebug)
 						WMSLoggerFactory.getLogger(getClass()).info(MODULE_NAME + " Runtime.getRuntime().addShutdownHook");
 			}
@@ -95,9 +101,6 @@ public class ModulePublishEvents extends ModuleBase {
 		this.logger = WMSLoggerFactory.getLoggerObj(appInstance);
 		this.moduleDebug = getPropertyValueBoolean(PROP_NAME_PREFIX + "Debug", false);
 		
-//		String fullname = appInstance.getApplication().getName() + "/" + appInstance.getName();
-		
-//		getLogger().info("onAppStart: " + fullname);
 		if (this.logger.isDebugEnabled())
 			this.moduleDebug = true;
 
@@ -107,9 +110,11 @@ public class ModulePublishEvents extends ModuleBase {
 			this.logger.info(MODULE_NAME + " DEBUG mode is OFF");
 
 		appInstance.addMediaCasterListener(this.mediaCasterListener);
-		
-		// TODO 
-		// this should be configurable – pulled in through getPropertyValueStr()
+
+		/*
+		 * TODO
+		 * https://github.com/peterzen/wowza-pubsub/issues/5
+		 */
 		topicName = "projects/stagecloud-1210/topics/mediaserver";
 		
 		gcloudPublisher = new GcloudPubsubPublisher(getLogger());
@@ -121,10 +126,8 @@ public class ModulePublishEvents extends ModuleBase {
 	}
 
 	/*
-	 * TODO - implement me
-	 * 
-	 * attributes should contain the data from the context where the event
-	 * occured (IMediaStream, IMediaCaster etc)
+	 * TODO
+	 * https://github.com/peterzen/wowza-pubsub/issues/2
 	 * 
 	 public void publishMessage(String message, SomeGenericHashType attributes) {
 		gcloudPublisher.publishMessage(topicName, message, attributes);
@@ -133,8 +136,8 @@ public class ModulePublishEvents extends ModuleBase {
 
 
 	public void onAppStop(IApplicationInstance appInstance) {
-		// TODO
-		// properly disconnect/tear down pubsub connection
+		// TODO 
+		// https://github.com/peterzen/wowza-pubsub/issues/4
 		gcloudPublisher = null;
 		String fullname = appInstance.getApplication().getName() + "/" + appInstance.getName();
 		getLogger().info("**** onAppStop: " + fullname);
@@ -158,15 +161,17 @@ public class ModulePublishEvents extends ModuleBase {
 
 	public void onStreamCreate(IMediaStream stream) {
 		getLogger().info("**** onStreamCreate: " + stream.getSrc());
-		// TODO
-		// pass 'stream' to publishMessage()
+		/* TODO
+		 * https://github.com/peterzen/wowza-pubsub/issues/3
+		 */
 		publishMessage("onStreamCreate");
 	}
 
 	public void onStreamDestroy(IMediaStream stream) {
 		getLogger().info("**** onStreamDestroy: " + stream.getSrc());
-		// TODO
-		// pass 'stream' to publishMessage()
+		/* TODO
+		 * https://github.com/peterzen/wowza-pubsub/issues/3
+		 */
 		publishMessage("onStreamDestroy");
 	}
 

@@ -25,13 +25,10 @@ public class GcloudPubsubPublisher {
 		this.logger = logger;
 		
 		try {
-			/* the following throws an exception: 
-			 * invoke(onStreamCreate): java.lang.reflect.InvocationTargetException|at 
-			 * sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)|at 
-			 * sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)|at 
-			 * sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)|at 
-			 * java.lang.reflect.Method.invoke(Method.java:497)|at 
-			 * com.wowza.wms.module.ModuleFunction.invoke(ModuleFunction.java:383)|
+			/* 
+			 * TODO #FIXME
+			 * https://github.com/peterzen/wowza-pubsub/issues/1
+			 * 
 			 */
 			this.pubsub = PortableConfiguration.createPubsubClient();
 			
@@ -64,7 +61,10 @@ public class GcloudPubsubPublisher {
 		return newTopic;
 	}
 	
-	// message = "Hello Cloud Pub/Sub!"
+	/*
+	 * TODO
+	 * https://github.com/peterzen/wowza-pubsub/issues/2
+	 */
 	public void publishMessage(String topicName, String message){
 		PubsubMessage pubsubMessage = new PubsubMessage();
 		// You need to base64-encode your message with
