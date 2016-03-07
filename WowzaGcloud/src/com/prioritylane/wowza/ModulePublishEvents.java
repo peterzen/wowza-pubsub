@@ -108,21 +108,33 @@ public class ModulePublishEvents extends ModuleBase {
 
 		appInstance.addMediaCasterListener(this.mediaCasterListener);
 		
+		// TODO 
+		// this should be configurable – pulled in through getPropertyValueStr()
 		topicName = "projects/stagecloud-1210/topics/mediaserver";
+		
 		gcloudPublisher = new GcloudPubsubPublisher(getLogger());
 	}
 
-	
-	public void doSomething(IClient client, RequestFunction function, AMFDataList params) {
-		getLogger().info("**** doSomething");
-		sendResult(client, params, "Hello Wowza");
-	}
-
+		
 	public void publishMessage(String message) {
 		gcloudPublisher.publishMessage(topicName, message);
 	}
 
+	/*
+	 * TODO - implement me
+	 * 
+	 * attributes should contain the data from the context where the event
+	 * occured (IMediaStream, IMediaCaster etc)
+	 * 
+	 public void publishMessage(String message, SomeGenericHashType attributes) {
+		gcloudPublisher.publishMessage(topicName, message, attributes);
+	 }
+	 */
+
+
 	public void onAppStop(IApplicationInstance appInstance) {
+		// TODO
+		// properly disconnect/tear down pubsub connection
 		gcloudPublisher = null;
 		String fullname = appInstance.getApplication().getName() + "/" + appInstance.getName();
 		getLogger().info("**** onAppStop: " + fullname);
@@ -146,11 +158,16 @@ public class ModulePublishEvents extends ModuleBase {
 
 	public void onStreamCreate(IMediaStream stream) {
 		getLogger().info("**** onStreamCreate: " + stream.getSrc());
+		// TODO
+		// pass 'stream' to publishMessage()
 		publishMessage("onStreamCreate");
 	}
 
 	public void onStreamDestroy(IMediaStream stream) {
 		getLogger().info("**** onStreamDestroy: " + stream.getSrc());
+		// TODO
+		// pass 'stream' to publishMessage()
+		publishMessage("onStreamDestroy");
 	}
 
 	public void onCall(String handlerName, IClient client, RequestFunction function, AMFDataList params) {
