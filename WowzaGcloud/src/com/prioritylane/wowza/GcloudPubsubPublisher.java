@@ -39,7 +39,7 @@ public class GcloudPubsubPublisher {
 		    Throwable cause = x.getCause();
 		    System.err.format("drinkMe() failed: %s%n", cause.getMessage());
 
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			getLogger().info("**** PubsubClient EXCEPTION");
 			e.printStackTrace();
 			return;
@@ -66,7 +66,16 @@ public class GcloudPubsubPublisher {
 	 * https://github.com/peterzen/wowza-pubsub/issues/2
 	 */
 	public void publishMessage(String topicName, String message){
-		PubsubMessage pubsubMessage = new PubsubMessage();
+		
+        getLogger().error("**********publishMessage: \n\n\n");
+
+        PubsubMessage pubsubMessage = null;
+        
+        try {
+        pubsubMessage = new PubsubMessage();
+        } catch(Throwable e){
+			e.printStackTrace();
+        }
 		// You need to base64-encode your message with
 		// PubsubMessage#encodeData() method.
 		try {
