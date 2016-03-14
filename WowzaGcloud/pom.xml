@@ -5,20 +5,54 @@
   <groupId>WowzaGcloud</groupId>
   <artifactId>WowzaGcloud</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.google.oauth-client</groupId>
+        <artifactId>google-oauth-client</artifactId>
+        <version>1.20.0</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.api-client</groupId>
+        <artifactId>google-api-client</artifactId>
+        <version>1.20.0</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.apis</groupId>
+        <artifactId>google-api-services-pubsub</artifactId>
+        <version>v1-rev8-1.21.0</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>com.google.oauth-client</groupId>
       <artifactId>google-oauth-client</artifactId>
+      <version>1.20.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.google.api-client</groupId>
       <artifactId>google-api-client</artifactId>
+      <version>1.20.0</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.api.client</groupId>
+      <artifactId>google-api-client-json</artifactId>
+      <version>1.2.3-alpha</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.http-client</groupId>
+      <artifactId>google-http-client-jackson2</artifactId>
+      <version>1.11.0-beta</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.google.apis</groupId>
       <artifactId>google-api-services-pubsub</artifactId>
+      <version>v1-rev8-1.21.0</version>
     </dependency>
   </dependencies>
   <repositories>
@@ -252,23 +286,4 @@
   <reporting>
     <outputDirectory>/Users/peter/Desktop/Work/StageCloud/wowza-pubsub/WowzaGcloud/target/site</outputDirectory>
   </reporting>
-  <dependencyManagement>
-  	<dependencies>
-  		<dependency>
-  			<groupId>com.google.oauth-client</groupId>
-  			<artifactId>google-oauth-client</artifactId>
-  			<version>1.20.0</version>
-  		</dependency>
-  		<dependency>
-  			<groupId>com.google.api-client</groupId>
-  			<artifactId>google-api-client</artifactId>
-  			<version>1.20.0</version>
-  		</dependency>
-  		<dependency>
-  			<groupId>com.google.apis</groupId>
-  			<artifactId>google-api-services-pubsub</artifactId>
-  			<version>v1-rev8-1.21.0</version>
-  		</dependency>
-  	</dependencies>
-  </dependencyManagement>
 </project>
