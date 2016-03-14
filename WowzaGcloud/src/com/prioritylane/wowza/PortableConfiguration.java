@@ -21,7 +21,7 @@ import com.prioritylane.wowza.RetryHttpInitializerWrapper;
 public class PortableConfiguration {
 
     // Default factory method.
-    public static Pubsub createPubsubClient() throws InvocationTargetException, IOException {
+    public static Pubsub createPubsubClient() throws IOException {
         return createPubsubClient(Utils.getDefaultTransport(),
                 Utils.getDefaultJsonFactory());
     }

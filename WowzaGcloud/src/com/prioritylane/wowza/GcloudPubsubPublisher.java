@@ -35,13 +35,9 @@ public class GcloudPubsubPublisher {
 			if(this.pubsub == null){
 				getLogger().error("*** could not instantiate pubsub");
 			}
-		} catch (InvocationTargetException x) {
-		    Throwable cause = x.getCause();
-		    System.err.format("drinkMe() failed: %s%n", cause.getMessage());
-
-		} catch (Throwable e) {
-			getLogger().info("**** PubsubClient EXCEPTION");
-			e.printStackTrace();
+		} catch (IOException e) {
+			getLogger().info("**** PubsubClient: " + e.toString());
+//			e.printStackTrace();
 			return;
 		}
 	}
